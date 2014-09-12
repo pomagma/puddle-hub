@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/pomagma/puddle-crud.svg?branch=master)](http://travis-ci.org/pomagma/puddle-crud)
+[![NPM Version](https://badge.fury.io/js/puddle-crud.svg)](https://www.npmjs.org/package/puddle-crud)
+[![NPM Dependencies](https://david-dm.org/pomagma/puddle-crud.svg)](https://www.npmjs.org/package/puddle-crud)
+[![Coverage Status](https://img.shields.io/coveralls/pomagma/puddle-crud.svg)](https://coveralls.io/r/pomagma/puddle-crud?branch=master)
 ## Puddle-crud
 
 Corpus CRUD API wrapper
