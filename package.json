@@ -1,6 +1,6 @@
 {
-  "name": "puddle-crud",
-  "version": "1.0.0",
+  "name": "puddle-hub",
+  "version": "2.0.0",
   "description": "Corpus CRUD API wrapper",
   "main": "index.js",
   "scripts": {
@@ -12,21 +12,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pomagma/puddle-crud"
+    "url": "git://github.com/pomagma/puddle-hub"
   },
   "keywords": [
     "pomagma",
     "corpus",
     "API",
     "puddle",
-    "CRUD"
+    "CRUD",
+    "hub"
   ],
   "author": "Fritz Obermeyer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pomagma/puddle-crud/issues"
+    "url": "https://github.com/pomagma/puddle-hub/issues"
   },
-  "homepage": "https://github.com/pomagma/puddle-crud",
+  "homepage": "https://github.com/pomagma/puddle-hub",
   "dependencies": {
     "debug": "^2.0.0",
     "lodash": "^2.4.1",

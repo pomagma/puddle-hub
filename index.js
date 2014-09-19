@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Debug = require('debug');
-var debug = Debug('puddle:crud');
+var debug = Debug('puddle:hub');
 var assert = require('assert');
 var uuid = require('node-uuid');
 
@@ -59,25 +59,25 @@ module.exports = function (hash) {
         });
 
     };
-    this.connect = function (otherCrud) {
+    this.connect = function (otherHub) {
         debug('.connect ->', this.nodeId);
         //reset our own data before connect;
-        this.hash = otherCrud.getState();
+        this.hash = otherHub.getState();
 
         //bind all methods together
         ['create', 'remove', 'update', 'reset'].forEach(function (method) {
-            otherCrud.on(
+            otherHub.on(
                 method,
                 _.bind(this[method], this),
                 this.nodeId
             );
             this.on(
                 method,
-                _.bind(otherCrud[method], otherCrud),
-                otherCrud.nodeId
+                _.bind(otherHub[method], otherHub),
+                otherHub.nodeId
             );
         }, this);
-        this.emit('reset', this.hash, otherCrud.nodeId);
+        this.emit('reset', this.hash, otherHub.nodeId);
     };
 
     this.reset = function (state, nodeId) {

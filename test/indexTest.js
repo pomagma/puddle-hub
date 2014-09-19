@@ -1,55 +1,55 @@
 'use strict';
 var assert = require('assert');
-var Crud = require('../index.js');
+var Hub = require('../index.js');
 var uuid = require('node-uuid');
 
-describe('Crud instance', function () {
-    var crud;
+describe('Hub instance', function () {
+    var hub;
     var id;
     var object;
     var object2;
     beforeEach(function () {
         id = uuid();
-        crud = new Crud();
+        hub = new Hub();
         object = {code: 'I\'m an object'};
         object2 = {code: 'I\'m another object'};
     });
     it('throws if not a function given as an event callback', function () {
         assert.throws(function () {
-            crud.on('create', {});
+            hub.on('create', {});
         });
     });
     describe('create', function () {
         describe('throws if ', function () {
             it('ID or Object are not passed', function () {
                 assert.throws(function () {
-                    crud.create();
+                    hub.create();
                 });
             });
             it('passed ID is not a string', function () {
                 assert.throws(function () {
-                    crud.create(1, object);
+                    hub.create(1, object);
                 });
 
                 assert.throws(function () {
-                    crud.create([], object);
+                    hub.create([], object);
                 });
 
                 assert.throws(function () {
-                    crud.create({}, object);
+                    hub.create({}, object);
                 });
             });
             it('same ID passed twice', function () {
                 var obj = {};
                 var id = uuid();
                 assert.throws(function () {
-                    crud.create(id, obj);
-                    crud.create(id, obj);
+                    hub.create(id, obj);
+                    hub.create(id, obj);
                 });
             });
         });
         it('re-emits same object', function (done) {
-            crud.on('create', function (newId, newObject) {
+            hub.on('create', function (newId, newObject) {
                 assert.equal(
                     JSON.stringify(newObject),
                     JSON.stringify(object)
@@ -57,100 +57,100 @@ describe('Crud instance', function () {
                 assert.equal(newId, id);
                 done();
             });
-            crud.create(id, object);
+            hub.create(id, object);
         });
     });
     describe('remove', function () {
         describe('throws if ', function () {
             it('ID not passed', function () {
                 assert.throws(function () {
-                    crud.remove();
+                    hub.remove();
                 });
             });
             it('passed ID is not a string', function () {
                 assert.throws(function () {
-                    crud.remove(1);
+                    hub.remove(1);
                 });
                 assert.throws(function () {
-                    crud.remove([]);
+                    hub.remove([]);
                 });
                 assert.throws(function () {
-                    crud.remove({});
+                    hub.remove({});
                 });
             });
             it('passed ID of non existent object', function () {
                 assert.throws(function () {
-                    crud.remove(id);
+                    hub.remove(id);
                 });
             });
         });
         it('re-emits removed ID', function (done) {
-            crud.on('remove', function (removedId) {
+            hub.on('remove', function (removedId) {
                 assert.equal(removedId, id);
                 done();
             });
-            crud.create(id, object);
-            crud.remove(id);
+            hub.create(id, object);
+            hub.remove(id);
         });
     });
     describe('update', function () {
         describe('throws if ', function () {
             it('ID not passed', function () {
                 assert.throws(function () {
-                    crud.update();
+                    hub.update();
                 });
             });
             it('passed ID is not a string', function () {
                 assert.throws(function () {
-                    crud.update(1);
+                    hub.update(1);
                 });
                 assert.throws(function () {
-                    crud.update([]);
+                    hub.update([]);
                 });
                 assert.throws(function () {
-                    crud.update({});
+                    hub.update({});
                 });
             });
             it('passed ID of non existent object', function () {
                 assert.throws(function () {
-                    crud.update(id);
+                    hub.update(id);
                 });
             });
             it('Object not passed', function () {
                 assert.throws(function () {
-                    crud.create(id, object);
-                    crud.update(id);
+                    hub.create(id, object);
+                    hub.update(id);
                 });
             });
         });
         it('re-emits updated object and ID', function (done) {
             var oldObject = 'Old';
             var newObject = 'New';
-            crud.on('update', function (updatedId, updatedObject) {
+            hub.on('update', function (updatedId, updatedObject) {
                 assert.equal(updatedObject, newObject);
                 assert.equal(updatedId, id);
                 done();
             });
-            crud.create(id, oldObject);
-            crud.update(id, newObject);
+            hub.create(id, oldObject);
+            hub.update(id, newObject);
         });
     });
     describe('constructor', function () {
         it('throws if not a hash given', function () {
             var c;
             assert.throws(function () {
-                c = new Crud('');
+                c = new Hub('');
             });
             assert.throws(function () {
-                c = new Crud([]);
+                c = new Hub([]);
             });
             assert.throws(function () {
-                c = new Crud(1);
+                c = new Hub(1);
             });
         });
         it('throws if called without New', function () {
             assert.throws(function () {
-                Crud();
+                Hub();
             });
         });
 
@@ -159,9 +159,9 @@ describe('Crud instance', function () {
         it('returns internal state', function () {
             var hash = {};
             hash[id] = object;
-            var crud = new Crud(hash);
+            var hub = new Hub(hash);
             assert.equal(
-                JSON.stringify(crud.getState()),
+                JSON.stringify(hub.getState()),
                 JSON.stringify(hash)
             );
         });
@@ -174,9 +174,9 @@ describe('Crud instance', function () {
         var two;
         var three;
         beforeEach(function () {
-            one = new Crud();
-            two = new Crud();
-            three = new Crud();
+            one = new Hub();
+            two = new Hub();
+            three = new Hub();
         });
         it('.connect fires reset event', function (done) {
             two.on('reset', function () {
@@ -203,9 +203,9 @@ describe('Crud instance', function () {
 
         describe('instance propagate initial state', function () {
             it('downwards', function () {
-                one = new Crud(object);
-                two = new Crud();
-                three = new Crud();
+                one = new Hub(object);
+                two = new Hub();
+                three = new Hub();
                 two.connect(one);
                 three.connect(two);
                 assert.equal(
@@ -215,9 +215,9 @@ describe('Crud instance', function () {
             });
 
             it('but not upwards', function () {
-                one = new Crud();
-                two = new Crud();
-                three = new Crud(object);
+                one = new Hub();
+                two = new Hub();
+                three = new Hub(object);
                 two.connect(one);
                 three.connect(two);
 

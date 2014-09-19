@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/pomagma/puddle-crud.svg?branch=master)](http://travis-ci.org/pomagma/puddle-crud)
-[![NPM Version](https://badge.fury.io/js/puddle-crud.svg)](https://www.npmjs.org/package/puddle-crud)
-[![NPM Dependencies](https://david-dm.org/pomagma/puddle-crud.svg)](https://www.npmjs.org/package/puddle-crud)
-[![Coverage Status](https://img.shields.io/coveralls/pomagma/puddle-crud.svg)](https://coveralls.io/r/pomagma/puddle-crud?branch=master)
-## Puddle-crud
+[![Build Status](https://travis-ci.org/pomagma/puddle-hub.svg?branch=master)](http://travis-ci.org/pomagma/puddle-hub)
+[![NPM Version](https://badge.fury.io/js/puddle-hub.svg)](https://www.npmjs.org/package/puddle-hub)
+[![NPM Dependencies](https://david-dm.org/pomagma/puddle-hub.svg)](https://www.npmjs.org/package/puddle-hub)
+[![Coverage Status](https://img.shields.io/coveralls/pomagma/puddle-hub.svg)](https://coveralls.io/r/pomagma/puddle-hub?branch=master)
+## Puddle-hub
 
 Corpus CRUD API wrapper
 
@@ -10,7 +10,7 @@ Corpus CRUD API wrapper
 ###Features:
     [X] Minimum dependencies
     [X] Can be connectd in a branched fashion, can't in circular  
-    Returns a `Crud` class which is:    
+    Returns a `Hub` class which is:    
         [X] has .on method to hook to events
         [X] emits: `create`,`remove`,`update` events
         [X] implements .create,.remove, .update methods
@@ -23,35 +23,35 @@ Corpus CRUD API wrapper
     
 ###Installation:
     
-    npm install puddle-crud
+    npm install puddle-hub
     npm test        # optional
     
 ###Usage:
 
 ####Basic usage:    
     
-    var Crud = require(‘puddle-crud’)
+    var Hub = require(‘puddle-hub’)
     var uuid = require(‘node-uuid’)
     var newId = uuid(); 
     var initialHash = {uuid():Obj1, uuid():Obj2, ...};    
-    var crud = new Crud(initialHash);  //optionaly pass in init hash
+    var hub = new Hub(initialHash);  //optionaly pass in init hash
     
-    crud.on('create', function (id,obj) {
+    hub.on('create', function (id,obj) {
         console.log('Create event called with ',obj);
     })
-    crud.create(newId,Obj3); //here an event will fire and you'll see in Console
+    hub.create(newId,Obj3); //here an event will fire and you'll see in Console
     // Create event called with Obj3
     
-    crud.getState() // returns current state of the internal hash including added Obj3;
+    hub.getState() // returns current state of the internal hash including added Obj3;
 
 ####Chaining:
-    var Crud = require(‘puddle-crud’)
+    var Hub = require(‘puddle-hub’)
     var uuid = require(‘node-uuid’)     
     var initialHash = {uuid():Obj1, uuid():Obj2, ...};    
     
-    var one = new Crud(initialHash);  //pass in init hash       
-    var two = new Crud();
-    var three = new Crud();
+    var one = new Hub(initialHash);  //pass in init hash       
+    var two = new Hub();
+    var three = new Hub();
     
     two.connect(one);    
     three.getState() // {}
